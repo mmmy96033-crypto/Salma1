@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta property="og:image" content="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/e48ab96c-e672-429d-b42f-7a7e960a0945.jpg">
+  <title> سلمي </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;900&family=Lalezar&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== القائمة الجانبية ===== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-profile">
+      <div class="avatar-lg">
+        <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/e48ab96c-e672-429d-b42f-7a7e960a0945.jpg" alt="سلمى">
+      </div>
+      <span class="s-name">سلمى السيد</span>
+      <span class="s-hadith">وصية الرسول الله ﷺ</span>
+    </div>
+
+    <div class="sidebar-title"><i class="fas fa-list-ul"></i> القائمة</div>
+    <button class="sidebar-item" data-page="home"><i class="fas fa-home"></i> الصفحة الرئيسية</button>
+    <button class="sidebar-item" data-page="quran"><i class="fas fa-quran"></i>  قرآن الكريم</button>
+    <button class="sidebar-item" data-page="books"><i class="fas fa-book"></i> كتب الروايات</button>
+    <button class="sidebar-item" data-page="daily"><i class="fas fa-envelope"></i> الرسالة اليومية</button>
+    <button class="sidebar-item" data-page="songs"><i class="fas fa-music"></i> فديو و ڪلام ليكي</button>
+    <button class="sidebar-item" data-page="social"><i class="fas fa-share-alt"></i> مواقع التواصل</button>
+
+    <div class="sidebar-divider"></div>
+    <!-- عنوان الإعدادات المضاف فوق زر معلومات الموقع -->
+    <div class="sidebar-title"><i class="fas fa-cog"></i> الإعدادات</div>
+    <button class="sidebar-item" id="openAboutBtn"><i class="fas fa-info-circle"></i> معلومات الموقع</button>
+    <button class="sidebar-item" id="pwaInstallBtn"><i class="fas fa-download"></i> تثبيت التطبيق</button>
+
+    <div class="sidebar-divider"></div>
+    <button class="sidebar-item logout-item" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+    </button>
+  </div>
+
+  <!-- ===== مودال معلومات الموقع ===== -->
+  <div class="modal-overlay" id="aboutModal">
+    <div class="modal-bg" id="aboutModalBg"></div>
+    <div class="modal-box">
+      <div class="modal-icon"><i class="fas fa-heart" style="color: #e98fb6;"></i></div>
+      <h3>🌷 عن الموقع</h3>
+      <p>
+        <strong>هذا الموقع صُنع من أجل سلمى 💖</strong><br><br>
+        <strong>الإصدار:</strong> 1.0<br>
+        <strong>التاريخ:</strong> 2025<br><br>
+        <strong>السبب:</strong> لأن سلمى تستحق كل الحب والاهتمام، وهذا الموقع هو هدية بسيطة تعبر عن مشاعر كبيرة. كل التفاصيل صُممت لتكون دافئة وجميلة مثلها. 🤍
+      </p>
+      <button class="close-modal" id="closeAboutBtn">فهمت ❤️</button>
+    </div>
+  </div>
+
+  <!-- ===== مودال تثبيت PWA ===== -->
+  <div class="modal-overlay" id="pwaModal">
+    <div class="modal-bg" id="pwaModalBg"></div>
+    <div class="modal-box">
+      <div class="modal-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h3>تثبيت التطبيق</h3>
+      <p>
+        لتثبيت هذا الموقع كتطبيق على هاتفك:
+        <br><br>
+        📱 <strong>أندرويد:</strong> اضغط على القائمة (ثلاث نقاط) في المتصفح ثم اختر "تثبيت التطبيق".
+        <br><br>
+        🍏 <strong>آيفون:</strong> اضغط على زر المشاركة ثم اختر "إضافة إلى الشاشة الرئيسية".
+        <br><br>
+        💡 ستصبح أيقونة التطبيق على شاشتك الرئيسية.
+      </p>
+      <button class="close-modal" id="pwaModalClose">فهمت ✅</button>
+    </div>
+  </div>
+
+  <!-- ===== الشريط العلوي ===== -->
+  <header class="header">
+    <div class="header-right">
+      <div class="avatar">
+        <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/e48ab96c-e672-429d-b42f-7a7e960a0945.jpg" alt="سلمى">
+      </div>
+      <div class="user-info">
+        <span class="user-name">سلمى السيد</span>
+        <span class="user-hadith">وصية الرسول الله ﷺ</span>
+      </div>
+    </div>
+    <div class="header-left">
+      <button class="header-btn" id="themeToggle" aria-label="تبديل الوضع الداكن">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="header-btn" id="menuToggle" aria-label="فتح القائمة">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+
+
+
+<section class="page active" id="page-home">
+  
+  <!-- ===== صورة الشهادة ===== -->
+  <div class="certificate-wrapper">
+    <div class="certificate-image-box" id="certificateTrigger">
+      <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/7a27d245-6989-4e59-84f1-19b56a083a2d.png" alt="شهادة تقدير لسلمى">
+      <div class="certificate-overlay">
+        <i class="fas fa-search-plus"></i>
+        <span>اضغط للتكبير</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== صندوق العداد الشفاف ===== -->
+  <div class="counter-glass-card">
+    <h3 class="counter-title">هيفضل يعد علي حبي ليكي</h3>
+    
+    <!-- العداد الكبير -->
+    <div class="counter-grid">
+      <div class="counter-item">
+        <span class="counter-number" id="years">0</span>
+        <span class="counter-label">سنوات</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-number" id="months">0</span>
+        <span class="counter-label">شهور</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-number" id="days">0</span>
+        <span class="counter-label">أيام</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-number" id="hours">0</span>
+        <span class="counter-label">ساعات</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-number" id="minutes">0</span>
+        <span class="counter-label">دقائق</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-number" id="seconds">0</span>
+        <span class="counter-label">ثواني</span>
+      </div>
+    </div>
+
+    <!-- التاريخ الهجري والميلادي -->
+    <div class="date-row">
+      <div class="date-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span id="gregorianDate">--</span>
+      </div>
+      <div class="date-divider">|</div>
+      <div class="date-item">
+        <i class="fas fa-calendar-check"></i>
+        <span id="hijriDate">--</span>
+      </div>
+    </div>
+
+    <!-- أيام الصوم (الاثنين والخميس) -->
+    <div class="fasting-row">
+      <i class="fas fa-utensils"></i>
+      <span>أيام الصوم: </span>
+      <span id="fastingDays">--</span>
+    </div>
+  </div>
+
+  <!-- ===== مودال تكبير الشهادة ===== -->
+  <div class="certificate-modal" id="certificateModal">
+    <div class="certificate-modal-bg" id="certificateModalBg"></div>
+    <div class="certificate-modal-box">
+      <button class="certificate-modal-close" id="certificateModalClose">
+        <i class="fas fa-times"></i>
+      </button>
+      <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/7a27d245-6989-4e59-84f1-19b56a083a2d.png" alt="شهادة تقدير لسلمى">
+      <div class="certificate-modal-text">
+        <h3>إلى سلمى الغالية</h3>
+        <p>
+          الحمد لله من كل قلبي
+
+مبروك ليكي النجاح، والله فرحتلك من قلبي، وكنت بدعيلك في كل وقت إن ربنا يكرمك ويكتبلك الخير، والحمد لله شفت فرحتك النهارده.
+
+النجاح ده نتيجة تعب وصبر، وربنا ما بيضيعش تعب حد. أسأل الله إن اللي جاي يكون أجمل، ويوفقك في كل خطوة، ويحققلك كل اللي نفسك فيه، ويباركلك في نجاحك ويزيدك نجاحًا وتألقًا.
+
+ألف ألف مبروك، وعقبال كل الأحلام اللي مستنياكي. 🌸🤍
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<!-- ===== شريط الموسيقى الثابت ===== -->
+<div class="music-bar" id="musicBar">
+  <div class="music-lyrics-box" id="musicLyricsBox"></div>
+  <div class="music-bar-inner">
+    <div class="music-cover">
+      <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/e48ab96c-e672-429d-b42f-7a7e960a0945.jpg" alt="غلاف الأغنية">
+    </div>
+    <div class="music-main">
+      <div class="music-title" id="musicTitle"> ڪل حاجه عشانك</div>
+      <div class="music-progress-row">
+        <span class="music-time" id="musicCurrentTime">0:00</span>
+        <div class="music-progress-bar" id="musicProgressBar">
+          <div class="music-progress-fill" id="musicProgressFill"></div>
+        </div>
+        <span class="music-time" id="musicDuration">0:00</span>
+      </div>
+      <div class="music-controls">
+        <button class="music-btn" id="musicNextBtn"><i class="fas fa-forward"></i></button>
+        <button class="music-btn music-btn-main" id="musicPlayBtn"><i class="fas fa-play" id="musicPlayIcon"></i></button>
+        <button class="music-btn" id="musicPrevBtn"><i class="fas fa-backward"></i></button>
+      </div>
+    </div>
+  </div>
+  <audio id="musicAudio" src="ma.mp3" loop></audio>
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ===== 1. صفحة القرآن الكريم ===== -->
+<section class="page" id="page-quran">
+  <!-- شريط البحث الخاص بالقرآن فقط -->
+  <div class="quran-search-container">
+    <div class="quran-search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="surahSearchInput" placeholder="ابحث عن سورة (مثال: الكهف)...">
+    </div>
+  </div>
+
+  <!-- شبكة السور -->
+  <div class="surah-grid" id="surahGrid"></div>
+
+  <!-- شريط التنقل السفلي الإسلامي -->
+  <nav class="quran-bottom-nav">
+    <button class="quran-nav-btn active" onclick="showPage('quran')">
+      <i class="fas fa-quran"></i>
+      <span>القرآن</span>
+    </button>
+    <button class="quran-nav-btn" onclick="showPage('quran-audio')">
+      <i class="fas fa-headphones"></i>
+      <span>الصوتيات</span>
+    </button>
+    <button class="quran-nav-btn" onclick="showPage('quran-tasbeeh')">
+      <i class="fas fa-fingerprint"></i>
+      <span>التسبيح</span>
+    </button>
+  </nav>
+</section>
+
+
+
+
+<!-- ===== 2. صفحة صوتيات القرآن الكريم ===== -->
+<section class="page" id="page-quran-audio">
+  <!-- شريط البحث الخاص بالصوتيات -->
+  <div class="audio-search-container">
+    <div class="audio-search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="audioSurahSearchInput" placeholder="ابحث عن سورة بصوت الشيخ ماهر المعيقلي...">
+    </div>
+  </div>
+
+  <!-- شبكة السور (مربعين جنب بعض) -->
+  <div class="audio-surah-grid" id="audioSurahGrid"></div>
+
+  <!-- شريط التنقل السفلي الإسلامي -->
+  <nav class="quran-bottom-nav">
+    <button class="quran-nav-btn" onclick="showPage('quran')">
+      <i class="fas fa-quran"></i>
+      <span>القرآن</span>
+    </button>
+    <button class="quran-nav-btn active" onclick="showPage('quran-audio')">
+      <i class="fas fa-headphones"></i>
+      <span>الصوتيات</span>
+    </button>
+    
+    <button class="quran-nav-btn" onclick="showPage('quran-tasbeeh')">
+      <i class="fas fa-fingerprint"></i>
+      <span>التسبيح</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ===== مودال مشغل الصوتيات المنبثق في منتصف الشاشة ===== -->
+<div class="quran-player-modal" id="quranPlayerModal">
+  <div class="quran-player-bg" id="quranPlayerBg"></div>
+  <div class="quran-player-box">
+    <!-- زر إغلاق (X) فوق على الشمال -->
+    <button class="quran-player-close" id="quranPlayerClose">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <!-- صورة الشيخ مربعة ومظبوطة الابعاد -->
+    <div class="quran-player-photo">
+      <img src="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/9fb30e3b-9e90-4dc3-b10b-695bb86e573b.jpg" alt="الشيخ ماهر المعيقلي">
+    </div>
+
+    <!-- معلومات السورة والشيخ -->
+    <div class="quran-player-info">
+      <h3 id="playerSurahName">سورة الفاتحة</h3>
+      <p>الشيخ ماهر المعيقلي</p>
+    </div>
+
+    <!-- شريط تقدم الصوت والوقت -->
+    <div class="quran-player-progress-container">
+      <div class="quran-player-progress-bar" id="modalProgressBar">
+        <div class="quran-player-progress-fill" id="modalProgressFill"></div>
+      </div>
+      <div class="quran-player-time-row">
+        <span id="modalCurrentTime">00:00</span>
+        <span id="modalDuration">00:00</span>
+      </div>
+    </div>
+
+    <!-- أزرار التحكم بالتشغيل -->
+    <div class="quran-player-controls">
+      <button class="player-btn" id="modalPrevBtn" title="السورة السابقة"><i class="fas fa-step-backward"></i></button>
+      <button class="player-btn player-btn-main" id="modalPlayBtn" title="تشغيل / إيقاف"><i class="fas fa-play" id="modalPlayIcon"></i></button>
+      <button class="player-btn" id="modalNextBtn" title="السورة التالية"><i class="fas fa-step-forward"></i></button>
+      <button class="player-btn" id="modalOptionsToggle" title="خيارات التشغيل"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <!-- قائمة الخيارات (تظهر عند الضغط على زر الثلاث شرط) -->
+    <div class="quran-player-options-group" id="quranPlayerOptionsGroup">
+      <button class="option-btn" id="repeatSurahBtn">
+        <i class="fas fa-redo"></i> إعاده السورة
+      </button>
+      <button class="option-btn" id="shuffleSurahBtn">
+        <i class="fas fa-random"></i> تشغيل عشوائي
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- عنصر الصوت الخفي الخاص بـ MP3 -->
+<audio id="quranAudioPlayer"></audio>
+
+
+
+
+
+
+
+
+
+
+<!-- ===== 4. صفحة المسبحة الإلكترونية ===== -->
+<section class="page" id="page-quran-tasbeeh">
+  <div class="tasbeeh-container">
+
+    <!-- اختيار الذكر -->
+    <div class="tasbeeh-phrase-selector" id="tasbeehPhraseSelector"></div>
+
+    <!-- البطاقة الرئيسية -->
+    <div class="tasbeeh-main-card">
+      <div class="tasbeeh-target-row" id="tasbeehTargetRow">
+        <button class="tasbeeh-target-btn" data-target="33">33</button>
+        <button class="tasbeeh-target-btn" data-target="99">99</button>
+        <button class="tasbeeh-target-btn" data-target="100">100</button>
+      </div>
+
+      <div class="tasbeeh-circle-wrap">
+        <svg class="tasbeeh-progress-ring" viewBox="0 0 200 200">
+          <circle class="ring-bg" cx="100" cy="100" r="88"></circle>
+          <circle class="ring-fill" id="tasbeehRingFill" cx="100" cy="100" r="88"></circle>
+        </svg>
+        <button class="tasbeeh-tap-btn" id="tasbeehTapBtn">
+          <span class="tasbeeh-count" id="tasbeehCount">0</span>
+          <span class="tasbeeh-phrase-label" id="tasbeehPhraseLabel">سبحان الله</span>
+        </button>
+      </div>
+
+      <div class="tasbeeh-session-actions">
+        <button id="tasbeehUndoBtn"><i class="fas fa-rotate-left"></i> تراجع</button>
+        <button id="tasbeehResetBtn"><i class="fas fa-arrow-rotate-right"></i> تصفير الجولة</button>
+      </div>
+    </div>
+
+    <!-- الإحصائيات -->
+    <div class="tasbeeh-stats-card">
+      <h3><i class="fas fa-chart-column"></i> إحصائيات <span id="statsPhraseName">سبحان الله</span></h3>
+      <div class="tasbeeh-stats-grid">
+        <div class="stat-item"><span class="stat-num" id="statToday">0</span><span class="stat-label">اليوم</span></div>
+        <div class="stat-item"><span class="stat-num" id="statMonth">0</span><span class="stat-label">الشهر</span></div>
+        <div class="stat-item"><span class="stat-num" id="statYear">0</span><span class="stat-label">السنة</span></div>
+        <div class="stat-item"><span class="stat-num" id="statTotal">0</span><span class="stat-label">الإجمالي</span></div>
+      </div>
+      <div class="tasbeeh-all-total">
+        <i class="fas fa-mosque"></i> إجمالي كل الأذكار اليوم: <strong id="statTodayAll">0</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="quran-bottom-nav">
+    <button class="quran-nav-btn" onclick="showPage('quran')"><i class="fas fa-quran"></i><span>القرآن</span></button>
+    <button class="quran-nav-btn" onclick="showPage('quran-audio')"><i class="fas fa-headphones"></i><span>الصوتيات</span></button>
+    <button class="quran-nav-btn active" onclick="showPage('quran-tasbeeh')"><i class="fas fa-fingerprint"></i><span>التسبيح</span></button>
+  </nav>
+</section>
+<!-- ===== 5. صفحة قراءة القرآن (شاشة القراءة الفخمة والمستقلة) ===== -->
+<section class="page" id="page-quran-read">
+  <div class="quran-reader-container">
+    
+    <!-- هيدر القارئ -->
+    <div class="read-header">
+      <button class="read-back-btn" id="readBackBtn">
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <h2 class="read-title" id="readTitle">سورة الفاتحة</h2>
+      <span class="read-page-counter" id="readPageCounter">1 / 1</span>
+    </div>
+
+    <!-- إطار وقالب المصحف الكبير الشفاف ذو الحواف الناعمة -->
+    <div class="read-image-frame">
+      <img id="readImage" src="" alt="صفحة القرآن الكريم">
+    </div>
+
+    <!-- أزرار التنقل السفلي (التالي / السابق) -->
+    <div class="read-controls">
+      <button class="read-nav-btn" id="readPrevBtn">
+        <i class="fas fa-chevron-right"></i> السابقة
+      </button>
+      <button class="read-nav-btn" id="readNextBtn">
+        التالية <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- ===== صفحة كتب الروايات ===== -->
+<section class="page" id="page-books">
+
+  <!-- شريط البحث الثابت -->
+  <div class="books-search-container">
+    <div class="books-search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="booksSearchInput" placeholder="ابحث بالاسم أو الرقم أو أول/آخر حرف...">
+    </div>
+  </div>
+
+  <!-- شبكة الكتب -->
+  <div class="books-grid" id="booksGrid"></div>
+
+</section>
+  
+  
+  
+  
+  
+<!-- ===== صفحة الرسالة اليومية ===== -->
+<section class="page" id="page-daily">
+  <div class="daily-container">
+
+    <!-- المربع الكبير: الرسالة اليومية -->
+    <div class="daily-message-box">
+      <div class="daily-message-header">
+        <i class="fas fa-envelope-open-text"></i>
+        <span>رسالة اليوم</span>
+      </div>
+      <div class="daily-message-text" id="dailyMessageText">
+        جاري تحميل الرسالة...
+      </div>
+      <button class="daily-copy-btn" id="dailyCopyBtn">
+        <i class="fas fa-copy" id="dailyCopyIcon"></i>
+        <span id="dailyCopyLabel">نسخ الرسالة</span>
+      </button>
+    </div>
+
+    <!-- المربعين الصغيرين -->
+    <div class="daily-mini-grid">
+      <div class="daily-mini-box">
+        <i class="fas fa-clock"></i>
+        <span class="daily-mini-value" id="dailyClockTime">00:00:00</span>
+        <span class="daily-mini-label">الوقت الآن</span>
+      </div>
+      <div class="daily-mini-box">
+        <i class="fas fa-calendar-day"></i>
+        <span class="daily-mini-value" id="dailyDateText">--</span>
+        <span class="daily-mini-label">التاريخ الميلادي</span>
+      </div>
+    </div>
+
+    <!-- المستطيل السفلي: ملحوظة -->
+    <div class="daily-note-box">
+      <i class="fas fa-lightbulb"></i>
+      <span>ملحوظة: ادخلي على الموقع كل يوم هتلاقي رسالة جديدة 🌸</span>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+<!-- ===== صفحة صوتيات أغاني ===== -->
+<section class="page" id="page-songs">
+  <div class="songs-container">
+
+    <!-- مربع الفيديو -->
+    <div class="songs-video-box">
+      <video id="songsVideo" controls playsinline>
+        <source src="mm.mp4" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+      </video>
+    </div>
+
+    <!-- مربع الرسائل -->
+    <div class="songs-message-box">
+      <div class="songs-message-header">
+        <i class="fas fa-heart"></i>
+        <span>رسالة لكِ</span>
+      </div>
+
+      <div class="songs-message-text" id="songsMessageText">
+        رسالتك الأولى هنا...
+      </div>
+
+      <div class="songs-message-controls">
+        <button class="songs-nav-btn" id="songsNextBtn">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <span class="songs-message-counter" id="songsMessageCounter">1 / 1</span>
+        <button class="songs-nav-btn" id="songsPrevBtn">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+  <!-- ===== صفحة مواقع التواصل ===== -->
+<section class="page" id="page-social">
+  <div class="social-container">
+
+    <!-- كروت التواصل -->
+    <div class="social-cards-grid">
+      <a href="https://wa.me/+201041937381?text=بحبك بجد والله طب لو بتحبي شخص قوليلي في صارحني " target="_blank" class="social-card social-whatsapp">
+        <div class="social-icon"><i class="fab fa-whatsapp"></i></div>
+        <span class="social-name">واتساب</span>
+      </a>
+
+      <a href="https://www.facebook.com/share/1F5N3w4mQ3/" target="_blank" class="social-card social-facebook">
+        <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+        <span class="social-name">فيسبوك</span>
+      </a>
+
+      <a href="https://www.instagram.com/just.salma9980?igsh=M3I3ZmM1c2JvOTd6" target="_blank" class="social-card social-instagram">
+        <div class="social-icon"><i class="fab fa-instagram"></i></div>
+        <span class="social-name">انستجرام</span>
+      </a>
+    </div>
+
+    <!-- صندوق الجملة اللطيفة -->
+    <div class="social-note-box">
+      <i class="fas fa-heart"></i>
+      <p>لو عايزة تعرفي مين الشخص اللي بيحبك... اسأليه بنفسك، لأن أصدق إجابة هتلاقيها في عنيه مش في رسالة 🌸</p>
+    </div>
+
+    <!-- صندوق صارحني -->
+    <div class="social-sarahni-box">
+      <div class="social-sarahni-header">
+        <i class="fas fa-comment-dots"></i>
+        <span>رابط صارحني</span>
+      </div>
+      <p class="social-sarahni-desc">ابعتيلي أي حاجة من قلبك</p>
+
+      <div class="social-sarahni-actions">
+        <a href="https://42396843741599.sarhne.com" target="_blank" class="sarahni-open-btn">
+          <i class="fas fa-arrow-up-right-from-square"></i> فتح صارحني
+        </a>
+        <button class="sarahni-copy-btn" id="sarahniCopyBtn">
+          <i class="fas fa-copy" id="sarahniCopyIcon"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <script src="main.js"> </script>
+</body>
+</html>
