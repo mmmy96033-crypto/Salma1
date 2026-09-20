@@ -1,9 +1,9 @@
-const CACHE_NAME = 'salma-app-v1';
+const CACHE_NAME = 'salma-app-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/page.html',
-  '/manifest.json'
+  './',
+  './index.html',
+  './page.html',
+  './manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,6 +32,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => response || fetch(event.request))
-      .catch(() => caches.match('/index.html'))
+      .catch(() => caches.match('./index.html'))
   );
 });
