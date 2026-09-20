@@ -1,9 +1,9 @@
-const CACHE_NAME = 'salma-app-v2';
+const CACHE_NAME = 'salma-app-v3';
 const urlsToCache = [
-  '',
-  'index.html',
-  'page.html',
-  'manifest.json'
+  'https://mmy96033-crypto.github.io/',
+  'https://mmy96033-crypto.github.io/index.html',
+  'https://mmy96033-crypto.github.io/page.html',
+  'https://mmy96033-crypto.github.io/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,6 +32,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => response || fetch(event.request))
-      .catch(() => caches.match('index.html'))
+      .catch(() => caches.match('https://mmy96033-crypto.github.io/index.html'))
   );
 });
