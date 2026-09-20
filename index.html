@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta property="og:image" content="https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/e48ab96c-e672-429d-b42f-7a7e960a0945.jpg">
-  <title>صاحبة عيون الغزال </title>
+  <title>صاحبة عيون الغزال</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 (CDN) -->
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Marhey:wght@400;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ===== نفس التصميم الأصلي مع إضافة متغيرات للوضع الداكن ===== */
+    /* ===================== متغيرات الوضع الفاتح ===================== */
     :root {
       --cream: #fff8f3;
       --blush: #f9d9e6;
@@ -21,15 +20,29 @@
       --gold: #f4d9a8;
       --glass: rgba(255, 255, 255, 0.35);
       --glass-border: rgba(255, 255, 255, 0.55);
-      --text-color: #4a2f47;
-      --card-bg: rgba(255, 255, 255, 0.35);
-      --input-bg: rgba(255, 255, 255, 0.55);
-      --input-border: rgba(255, 255, 255, 0.8);
-      --shadow: 0 20px 60px rgba(180, 100, 140, 0.25);
-      --notif-bg: rgba(255, 255, 255, 0.55);
-      --notif-border: rgba(255, 255, 255, 0.7);
+
+      /* ألوان النصوص (فاتح) */
+      --title-color: #5a2447;
+      --sub-color: #8c5675;
+      --label-color: #7d4566;
+      --input-text: #4a2340;
+      --placeholder: #b98aa5;
+      --icon-color: #b5688f;
+      --foot-color: #a5758f;
+
+      --card-bg: rgba(255, 255, 255, 0.42);
+      --input-bg: rgba(255, 255, 255, 0.65);
+      --input-border: rgba(255, 255, 255, 0.85);
+      --input-focus-bg: rgba(255, 255, 255, 0.85);
+      --autofill-bg: #fdeef4;
+      --shadow: 0 20px 60px rgba(180, 100, 140, 0.22);
+      --notif-bg: rgba(255, 255, 255, 0.72);
+      --notif-border: rgba(255, 255, 255, 0.85);
+      --notif-title: #7a3357;
+      --notif-sub: #a05f7e;
     }
-    /* الوضع الداكن */
+
+    /* ===================== متغيرات الوضع الداكن ===================== */
     body.dark-mode {
       --cream: #2d1f2b;
       --blush: #3d2838;
@@ -38,25 +51,33 @@
       --mauve: #c99bb2;
       --plum: #f0dce8;
       --glass: rgba(30, 20, 28, 0.7);
-      --glass-border: rgba(80, 60, 75, 0.6);
-      --text-color: #f0dce8;
-      --card-bg: rgba(30, 20, 28, 0.7);
-      --input-bg: rgba(50, 35, 45, 0.7);
-      --input-border: rgba(100, 70, 90, 0.8);
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      --notif-bg: rgba(30, 20, 28, 0.85);
-      --notif-border: rgba(80, 60, 75, 0.7);
+      --glass-border: rgba(90, 65, 85, 0.6);
+
+      --title-color: #f7e3ef;
+      --sub-color: #d4b3c7;
+      --label-color: #d8b6cb;
+      --input-text: #f3e2ec;
+      --placeholder: #9c7c92;
+      --icon-color: #d9aac7;
+      --foot-color: #b997ae;
+
+      --card-bg: rgba(32, 22, 30, 0.78);
+      --input-bg: rgba(60, 42, 55, 0.75);
+      --input-border: rgba(120, 85, 105, 0.75);
+      --input-focus-bg: rgba(75, 52, 68, 0.9);
+      --autofill-bg: #3a2635;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      --notif-bg: rgba(40, 27, 37, 0.92);
+      --notif-border: rgba(110, 78, 100, 0.75);
+      --notif-title: #f7d9ea;
+      --notif-sub: #d1a9c1;
     }
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
       overflow-x: hidden;
       font-family: 'Tajawal', sans-serif;
       background:
@@ -65,7 +86,7 @@
         radial-gradient(circle at 50% 100%, #f6c9dd 0%, transparent 55%),
         linear-gradient(160deg, var(--cream) 0%, var(--blush) 55%, var(--blush-2) 100%);
       background-attachment: fixed;
-      color: var(--text-color);
+      color: var(--title-color);
       transition: background 0.3s, color 0.3s;
     }
     body.dark-mode {
@@ -77,60 +98,36 @@
     }
     body {
       min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       position: relative;
     }
 
-    /* ===== الخلفية العائمة ===== */
+    /* ===================== قلوب عائمة ===================== */
     #hearts-field {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
+      position: fixed; inset: 0;
+      overflow: hidden; pointer-events: none;
       z-index: 1;
     }
     .heart {
-      position: absolute;
-      bottom: -10%;
+      position: absolute; bottom: -10%;
       opacity: 0;
-      filter: drop-shadow(0 0 6px rgba(233, 150, 190, 0.5));
+      filter: drop-shadow(0 3px 6px rgba(200, 100, 150, 0.45));
       animation: floatUp linear infinite;
     }
-    .heart svg {
-      display: block;
-    }
+    .heart svg { display: block; }
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg) scale(var(--s, 1));
-        opacity: 0;
-      }
-      10% {
-        opacity: .85;
-      }
-      50% {
-        transform: translateY(-55vh) translateX(var(--drift, 20px)) rotate(15deg) scale(var(--s, 1));
-      }
-      90% {
-        opacity: .7;
-      }
-      100% {
-        transform: translateY(-115vh) translateX(calc(var(--drift, 20px) * -1)) rotate(-10deg) scale(var(--s, 1));
-        opacity: 0;
-      }
+      0%   { transform: translateY(0) translateX(0) rotate(0deg) scale(var(--s,1)); opacity: 0; }
+      10%  { opacity: .9; }
+      50%  { transform: translateY(-55vh) translateX(var(--drift, 20px)) rotate(15deg) scale(var(--s,1)); }
+      90%  { opacity: .75; }
+      100% { transform: translateY(-115vh) translateX(calc(var(--drift,20px) * -1)) rotate(-10deg) scale(var(--s,1)); opacity: 0; }
     }
 
-    /* ===== إشعار الخطأ ===== */
+    /* ===================== إشعار ===================== */
     #notif-wrap {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      z-index: 50;
-      pointer-events: none;
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: center;
+      z-index: 50; pointer-events: none;
       padding-top: max(14px, env(safe-area-inset-top));
     }
     #notif {
@@ -141,245 +138,232 @@
       -webkit-backdrop-filter: blur(20px) saturate(160%);
       border: 1px solid var(--notif-border);
       border-radius: 26px;
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 10px 35px rgba(167, 76, 116, 0.28);
-      transform: translateY(-140%);
-      transition: transform .55s cubic-bezier(.34, 1.56, .64, 1);
+      padding: 14px 16px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 10px 35px rgba(120, 60, 100, 0.25);
+      opacity: 0;
+      transform: translateY(-140%) scale(.95);
+      transition:
+        transform .55s cubic-bezier(.34, 1.56, .64, 1),
+        opacity .35s ease;
     }
     #notif.show {
-      transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
     #notif .icon-badge {
       flex: 0 0 auto;
-      width: 42px;
-      height: 42px;
+      width: 44px; height: 44px;
       border-radius: 14px;
-      background: linear-gradient(145deg, #ffb4c6, #e97fa6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, .5), 0 4px 10px rgba(217, 90, 140, .35);
+      background: linear-gradient(145deg, #ffe6f0, #f9c4dd);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow:
+        inset 0 1px 3px rgba(255,255,255,.9),
+        inset 0 -3px 6px rgba(200, 100, 150, .18),
+        0 5px 14px rgba(217,90,140,.35);
     }
-    #notif .txt {
-      flex: 1;
-      min-width: 0;
+    #notif .icon-badge svg {
+      width: 26px; height: 26px;
+      filter: drop-shadow(0 2px 3px rgba(180, 60, 110, .35));
     }
+    #notif .txt { flex: 1; min-width: 0; }
     #notif .txt .t1 {
-      font-weight: 800;
-      font-size: 15px;
-      color: #7a3357;
+      font-weight: 800; font-size: 15px;
+      color: var(--notif-title);
+      display: flex; align-items: center; gap: 6px;
+      flex-wrap: wrap;
+    }
+    #notif .txt .t1 svg {
+      width: 16px; height: 16px;
+      filter: drop-shadow(0 1px 2px rgba(180, 60, 110, .35));
     }
     #notif .txt .t2 {
       font-size: 12.5px;
-      color: #a05f7e;
+      color: var(--notif-sub);
       margin-top: 2px;
     }
 
-    /* ===== البطاقة الرئيسية ===== */
+    /* ===================== البطاقة ===================== */
     .stage {
-      position: relative;
-      z-index: 5;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative; z-index: 5;
+      width: 100%; display: flex; align-items: center; justify-content: center;
       padding: 28px 18px;
     }
     .card {
-      width: 100%;
-      max-width: 390px;
+      width: 100%; max-width: 390px;
       background: var(--card-bg);
       backdrop-filter: blur(22px) saturate(180%);
       -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid var(--glass-border);
       border-radius: 34px;
       padding: 38px 30px 32px;
-      box-shadow: var(--shadow), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow), inset 0 1px 1px rgba(255,255,255,0.35);
       position: relative;
       animation: cardIn .8s cubic-bezier(.2, .9, .25, 1) both;
-      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+      transition: background .3s, border .3s, box-shadow .3s;
     }
     @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(30px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .heart-badge {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 68px; height: 68px;
+      margin: 0 auto 12px;
+      display: flex; align-items: center; justify-content: center;
       border-radius: 50%;
-      background: linear-gradient(150deg, #ffd7e6, #f6a9c9);
-      box-shadow: 0 8px 20px rgba(223, 110, 160, .35), inset 0 1px 2px rgba(255, 255, 255, .7);
+      background: linear-gradient(150deg, #ffe4ef, #f7b8d3);
+      box-shadow:
+        0 10px 24px rgba(223,110,160,.4),
+        inset 0 2px 3px rgba(255,255,255,.85),
+        inset 0 -4px 8px rgba(200, 90, 140, .18);
       animation: pulse 2.4s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%,
-      100% {
+      0%, 100% {
         transform: scale(1);
-        box-shadow: 0 8px 20px rgba(223, 110, 160, .35), inset 0 1px 2px rgba(255, 255, 255, .7);
+        box-shadow: 0 10px 24px rgba(223,110,160,.4), inset 0 2px 3px rgba(255,255,255,.85), inset 0 -4px 8px rgba(200, 90, 140, .18);
       }
       50% {
         transform: scale(1.08);
-        box-shadow: 0 10px 26px rgba(223, 110, 160, .5), inset 0 1px 2px rgba(255, 255, 255, .7);
+        box-shadow: 0 14px 30px rgba(223,110,160,.55), inset 0 2px 3px rgba(255,255,255,.85), inset 0 -4px 8px rgba(200, 90, 140, .18);
       }
     }
     .heart-badge svg {
-      width: 30px;
-      height: 30px;
+      width: 38px; height: 38px;
+      filter: drop-shadow(0 3px 5px rgba(180, 60, 110, .4));
     }
 
+    /* ===================== العنوان ===================== */
     h1 {
-      font-family: 'Aref Ruqaa', serif;
+      font-family: 'Reem Kufi', 'Marhey', 'Tajawal', sans-serif;
       text-align: center;
-      font-size: clamp(24px, 6vw, 30px);
-      margin: 0 0 4px;
-      color: #6b3457;
+      font-size: clamp(28px, 7vw, 38px);
+      line-height: 1.35;
+      margin: 0 0 8px;
       font-weight: 700;
-      transition: color 0.3s;
+      letter-spacing: .5px;
+
+      background: linear-gradient(135deg, #b6588c 0%, #e28ab0 45%, #c9689a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+
+      filter: drop-shadow(0 2px 6px rgba(199, 100, 150, 0.28));
+      position: relative;
+      transition: filter 0.3s;
     }
     body.dark-mode h1 {
-      color: #f0dce8;
+      background: linear-gradient(135deg, #ffd5e8 0%, #f3a8cb 50%, #e28ab0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(232, 140, 180, 0.55));
     }
+
     .sub {
       text-align: center;
       font-size: 13.5px;
-      color: #a9718f;
+      color: var(--sub-color);
       margin: 0 0 26px;
-      font-weight: 400;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; flex-wrap: wrap;
       transition: color 0.3s;
     }
-    body.dark-mode .sub {
-      color: #c9a9be;
+    .sub svg {
+      width: 15px; height: 15px;
+      filter: drop-shadow(0 1px 2px rgba(180, 60, 110, .3));
     }
 
-    .field {
-      position: relative;
-      margin-bottom: 18px;
-    }
+    /* ===================== الحقول ===================== */
+    .field { position: relative; margin-bottom: 18px; }
     .field label {
       display: block;
       font-size: 12.5px;
-      color: #8a5273;
+      color: var(--label-color);
       font-weight: 700;
       margin-bottom: 7px;
       padding-right: 4px;
       transition: color 0.3s;
     }
-    body.dark-mode .field label {
-      color: #c9a9be;
-    }
     .input-wrap {
       position: relative;
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       background: var(--input-bg);
       border: 1.5px solid var(--input-border);
       border-radius: 18px;
-      transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+      transition: border-color .25s, box-shadow .25s, background .25s;
       overflow: hidden;
     }
     .input-wrap:focus-within {
       border-color: var(--rose);
-      background: rgba(255, 255, 255, 0.75);
+      background: var(--input-focus-bg);
       box-shadow: 0 0 0 4px rgba(233, 150, 190, 0.22);
-    }
-    body.dark-mode .input-wrap:focus-within {
-      background: rgba(60, 40, 55, 0.8);
-      box-shadow: 0 0 0 4px rgba(233, 150, 190, 0.3);
     }
     .input-wrap.err {
       border-color: #e9788f;
       animation: shake .45s ease;
     }
     @keyframes shake {
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-      20% {
-        transform: translateX(-7px);
-      }
-      40% {
-        transform: translateX(6px);
-      }
-      60% {
-        transform: translateX(-4px);
-      }
-      80% {
-        transform: translateX(3px);
-      }
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(3px); }
     }
     .input-wrap .ic {
       flex: 0 0 auto;
-      width: 44px;
-      height: 46px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #c17ba0;
-    }
-    body.dark-mode .input-wrap .ic {
-      color: #d9b0c8;
+      width: 44px; height: 46px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--icon-color);
+      transition: color .3s;
     }
     .input-wrap input {
-      flex: 1;
-      min-width: 0;
-      border: none;
-      outline: none;
+      flex: 1; min-width: 0;
+      border: none; outline: none;
       background: transparent;
       font-family: 'Tajawal', sans-serif;
       font-size: 15px;
-      color: #5b3350;
-      padding: 12px 4px 12px 4px;
-      font-weight: 500;
+      color: var(--input-text);
+      padding: 12px 4px;
+      font-weight: 600;
       transition: color 0.3s;
     }
-    body.dark-mode .input-wrap input {
-      color: #f0dce8;
-    }
     .input-wrap input::placeholder {
-      color: #c79ab4;
+      color: var(--placeholder);
       font-weight: 400;
     }
-    body.dark-mode .input-wrap input::placeholder {
-      color: #a07f93;
-    }
-    .toggle-eye {
-      flex: 0 0 auto;
-      width: 44px;
-      height: 46px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #c17ba0;
-      background: none;
-      border: none;
-    }
-    .toggle-eye:active {
-      transform: scale(.9);
-    }
-    body.dark-mode .toggle-eye {
-      color: #d9b0c8;
+
+    /* حل مشكلة الخلفية البيضاء عند اللصق / autofill */
+    .input-wrap input:-webkit-autofill,
+    .input-wrap input:-webkit-autofill:hover,
+    .input-wrap input:-webkit-autofill:focus,
+    .input-wrap input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 1000px var(--autofill-bg) inset !important;
+      box-shadow: 0 0 0 1000px var(--autofill-bg) inset !important;
+      -webkit-text-fill-color: var(--input-text) !important;
+      caret-color: var(--input-text);
+      transition: background-color 9999s ease-in-out 0s;
+      font-weight: 600;
     }
 
+    .toggle-eye {
+      flex: 0 0 auto;
+      width: 44px; height: 46px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--icon-color);
+      background: none; border: none;
+      transition: color .3s;
+    }
+    .toggle-eye:active { transform: scale(.9); }
+
+    /* ===================== زر الدخول ===================== */
     .login-btn {
       width: 100%;
-      border: none;
-      cursor: pointer;
+      border: none; cursor: pointer;
       margin-top: 8px;
       padding: 15px 0;
       border-radius: 20px;
@@ -389,76 +373,80 @@
       letter-spacing: .3px;
       color: #fff;
       background: linear-gradient(135deg, #e28ab0, #c9689a 60%, #b6588c);
-      box-shadow: 0 14px 28px rgba(199, 100, 150, 0.4), inset 0 1px 1px rgba(255, 255, 255, .4);
+      box-shadow: 0 14px 28px rgba(199,100,150,0.4), inset 0 1px 1px rgba(255,255,255,.4);
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       gap: 10px;
       min-height: 52px;
-      transition: transform .15s ease, box-shadow .2s ease;
+      transition: transform .15s, box-shadow .2s;
     }
-    .login-btn:active {
-      transform: scale(.97);
-    }
-    .login-btn[disabled] {
-      opacity: .85;
-      cursor: default;
-    }
+    .login-btn:active { transform: scale(.97); }
+    .login-btn[disabled] { opacity: .85; cursor: default; }
 
     .spinner {
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.45);
+      border: 3px solid rgba(255,255,255,0.45);
       border-top-color: #fff;
       animation: spin .7s linear infinite;
       display: none;
     }
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .foot {
       text-align: center;
       margin-top: 22px;
       font-size: 11.5px;
-      color: #b483a0;
+      color: var(--foot-color);
+      display: flex; align-items: center; justify-content: center;
+      gap: 5px; flex-wrap: wrap;
       transition: color 0.3s;
     }
-    body.dark-mode .foot {
-      color: #b997ae;
-    }
-    .foot span {
-      color: #e98fb6;
+    .foot svg {
+      width: 13px; height: 13px;
+      filter: drop-shadow(0 1px 2px rgba(180, 60, 110, .35));
+      vertical-align: middle;
     }
 
-    @media (max-width:360px) {
-      .card {
-        padding: 30px 20px 26px;
-        border-radius: 28px;
-      }
+    @media (max-width: 360px) {
+      .card { padding: 30px 20px 26px; border-radius: 28px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- تعريف تدرّجات القلب 3D (مشترك) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <radialGradient id="heart3d" cx="35%" cy="28%" r="80%">
+        <stop offset="0%"  stop-color="#ffd9e8"/>
+        <stop offset="35%" stop-color="#f78ab5"/>
+        <stop offset="75%" stop-color="#d95a90"/>
+        <stop offset="100%" stop-color="#a33568"/>
+      </radialGradient>
+      <radialGradient id="shine3d" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#ffffff" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+  </svg>
+
   <div id="hearts-field"></div>
 
-  <!-- ===== إشعار الخطأ ===== -->
+  <!-- إشعار -->
   <div id="notif-wrap">
     <div id="notif">
       <div class="icon-badge">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2c-4 3-8 6-8 11a8 8 0 0016 0c0-5-4-8-8-11z" fill="#fff"/>
-          <path d="M9 12l2 2 4-4" stroke="#e97fa6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+                fill="url(#heart3d)"/>
+          <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+          <ellipse cx="16" cy="8.6" rx="1.4" ry="1" fill="#ffffff" opacity=".45" transform="rotate(25 16 8.6)"/>
         </svg>
       </div>
       <div class="txt">
-        <div class="t1">كلمة المرور غلط 💔</div>
-        <div class="t2">جرّبي تاني يا قمر</div>
+        <div class="t1" id="notifTitle"></div>
+        <div class="t2" id="notifSub"></div>
       </div>
     </div>
   </div>
@@ -467,12 +455,22 @@
     <div class="card">
       <div class="heart-badge">
         <svg viewBox="0 0 24 24" fill="none">
-          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z" fill="#ffffff"/>
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+                fill="url(#heart3d)"/>
+          <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+          <ellipse cx="16" cy="8.6" rx="1.4" ry="1" fill="#ffffff" opacity=".45" transform="rotate(25 16 8.6)"/>
         </svg>
       </div>
 
       <h1>صاحبة عيون الغزال</h1>
-      <p class="sub">اشتقنالك.. سجّلي دخولك يا حبيبتي 🤍</p>
+      <p class="sub">
+        اشتقنالك.. سجّلي دخولك يا حبيبتي
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+                fill="url(#heart3d)"/>
+          <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+        </svg>
+      </p>
 
       <form id="loginForm" autocomplete="off">
         <div class="field">
@@ -484,7 +482,7 @@
                 <path d="M4 20c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
             </span>
-            <input type="text" id="username" placeholder="اكتبي اسم المستخدم">
+            <input type="text" id="username" placeholder="اكتبي اسم المستخدم" autocomplete="off">
           </div>
         </div>
 
@@ -498,7 +496,7 @@
                 <circle cx="12" cy="15" r="1.4" fill="currentColor"/>
               </svg>
             </span>
-            <input type="password" id="password" placeholder="اكتبي كلمة المرور">
+            <input type="password" id="password" placeholder="اكتبي كلمة المرور" autocomplete="off">
             <button type="button" class="toggle-eye" id="eyeBtn" aria-label="إظهار كلمة المرور">
               <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none">
                 <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
@@ -514,87 +512,104 @@
         </button>
       </form>
 
-      <div class="foot">صُنع بـ <span>♥</span> لسلمى</div>
+      <div class="foot">
+        صُنع بـ
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+                fill="url(#heart3d)"/>
+          <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+        </svg>
+        لسلمى
+      </div>
     </div>
   </div>
 
+  <!-- مكتبة Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    /* ===== تطبيق الوضع الداكن من localStorage ===== */
+    /* ============ إعداد Supabase ============ */
+    const SUPABASE_URL = 'https://utkluvmpelinvlbjzpzx.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_QKM2narAhuKtmpRW15fKpg_7yxdsijC';
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    /* ============ الوضع الداكن ============ */
     (function applyTheme() {
-      const dark = localStorage.getItem('salma-theme') === 'dark';
-      if (dark) document.body.classList.add('dark-mode');
+      if (localStorage.getItem('salma-theme') === 'dark')
+        document.body.classList.add('dark-mode');
     })();
 
-    /* ===== الخلفية العائمة (قلوب) ===== */
+    /* ============ شكل القلب 3D (للاستخدام داخل النصوص) ============ */
+    const HEART_3D = `
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+              fill="url(#heart3d)"/>
+        <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+      </svg>`;
+
+    /* ============ قلوب عائمة ============ */
     const heartsField = document.getElementById('hearts-field');
-    const colors = ['#f4a6c6', '#f0b8d6', '#e88bb0', '#f7c9de', '#eb9fc2'];
 
     function spawnHeart() {
       const el = document.createElement('div');
       el.className = 'heart';
-      const size = 12 + Math.random() * 22;
+      const size = 14 + Math.random() * 24;
       const left = Math.random() * 100;
-      const dur = 9 + Math.random() * 8;
+      const dur  = 9 + Math.random() * 8;
       const delay = Math.random() * 2;
       const drift = (Math.random() * 60 - 30) + 'px';
-      const color = colors[Math.floor(Math.random() * colors.length)];
       el.style.left = left + 'vw';
       el.style.setProperty('--s', (0.6 + Math.random() * 0.8).toFixed(2));
       el.style.setProperty('--drift', drift);
       el.style.animationDuration = dur + 's';
       el.style.animationDelay = delay + 's';
-      el.innerHTML =
-        `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z" fill="${color}"/></svg>`;
+      el.innerHTML = `
+        <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8 2.4 4.5 6 4.5c2 0 3.6 1.2 6 3.6 2.4-2.4 4-3.6 6-3.6 3.6 0 5.6 3.5 4 7.2C19.5 16.1 12 21 12 21z"
+                fill="url(#heart3d)"/>
+          <ellipse cx="8" cy="8" rx="2.6" ry="1.6" fill="url(#shine3d)" transform="rotate(-30 8 8)"/>
+          <ellipse cx="16" cy="8.6" rx="1.4" ry="1" fill="#ffffff" opacity=".45" transform="rotate(25 16 8.6)"/>
+        </svg>`;
       heartsField.appendChild(el);
       setTimeout(() => el.remove(), (dur + delay) * 1000 + 200);
     }
     for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 350);
     setInterval(spawnHeart, 800);
 
-    /* ===== المؤثرات الصوتية ===== */
+    /* ============ أصوات ============ */
     let audioCtx;
-
     function getCtx() {
-      if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
       return audioCtx;
     }
-
     function typeTick() {
       const ctx = getCtx();
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
+      const o = ctx.createOscillator(), g = ctx.createGain();
       o.type = 'sine';
       o.frequency.value = 720 + Math.random() * 180;
-      g.gain.setValueAtTime(0.05, ctx.currentTime);
+      g.gain.setValueAtTime(0.04, ctx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.08);
       o.connect(g).connect(ctx.destination);
-      o.start();
-      o.stop(ctx.currentTime + 0.09);
+      o.start(); o.stop(ctx.currentTime + 0.09);
     }
-
     function errorSound() {
       const ctx = getCtx();
       [330, 260].forEach((f, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
+        const o = ctx.createOscillator(), g = ctx.createGain();
         o.type = 'sine';
         o.frequency.value = f;
-        g.gain.setValueAtTime(0.001, ctx.currentTime + i * 0.12);
-        g.gain.linearRampToValueAtTime(0.08, ctx.currentTime + i * 0.12 + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.12 + 0.28);
+        const t = ctx.currentTime + i * 0.12;
+        g.gain.setValueAtTime(0.001, t);
+        g.gain.linearRampToValueAtTime(0.08, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
         o.connect(g).connect(ctx.destination);
-        o.start(ctx.currentTime + i * 0.12);
-        o.stop(ctx.currentTime + i * 0.12 + 0.3);
+        o.start(t); o.stop(t + 0.3);
       });
     }
-
     function successMelody() {
       const ctx = getCtx();
-      const notes = [523.25, 659.25, 783.99, 1046.5];
-      notes.forEach((f, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
         o.type = 'sine';
         o.frequency.value = f;
         const t = ctx.currentTime + i * 0.16;
@@ -602,85 +617,153 @@
         g.gain.linearRampToValueAtTime(0.09, t + 0.02);
         g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
         o.connect(g).connect(ctx.destination);
-        o.start(t);
-        o.stop(t + 0.55);
+        o.start(t); o.stop(t + 0.55);
       });
     }
-
-    /* ===== ربط الصوت بالكتابة ===== */
-    ['username', 'password'].forEach(id => {
+    ['username','password'].forEach(id => {
       document.getElementById(id).addEventListener('input', typeTick);
     });
 
-    /* ===== المتغيرات والعناصر ===== */
-    const CORRECT_USER = 'salma';
-    const CORRECT_PASS_VARIANTS = ['6/4/2008', '6-4-2008', '06/04/2008', '642008', '6.4.2008'];
-
-    const form = document.getElementById('loginForm');
+    /* ============ عناصر ============ */
+    const form     = document.getElementById('loginForm');
     const userWrap = document.getElementById('userWrap');
     const passWrap = document.getElementById('passWrap');
     const loginBtn = document.getElementById('loginBtn');
-    const btnText = document.getElementById('btnText');
-    const spinner = document.getElementById('spinner');
-    const notif = document.getElementById('notif');
+    const btnText  = document.getElementById('btnText');
+    const spinner  = document.getElementById('spinner');
+    const notif    = document.getElementById('notif');
+    const notifTitle = document.getElementById('notifTitle');
+    const notifSub   = document.getElementById('notifSub');
 
     const eyeBtn = document.getElementById('eyeBtn');
     const eyeIcon = document.getElementById('eyeIcon');
     const passInput = document.getElementById('password');
 
+    /* ============ إظهار/إخفاء كلمة المرور ============ */
     eyeBtn.addEventListener('click', () => {
       const isPass = passInput.type === 'password';
       passInput.type = isPass ? 'text' : 'password';
-      eyeIcon.innerHTML = isPass ?
-        `<path d="M3 3l18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M2 12s3.6-6.5 10-6.5c1.8 0 3.4.5 4.7 1.2M22 12s-1.4 2.6-4 4.3M9.9 9.9a2.6 2.6 0 003.6 3.7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>` :
-        `<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.8"/>`;
+      eyeIcon.innerHTML = isPass
+        ? `<path d="M3 3l18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M2 12s3.6-6.5 10-6.5c1.8 0 3.4.5 4.7 1.2M22 12s-1.4 2.6-4 4.3M9.9 9.9a2.6 2.6 0 003.6 3.7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`
+        : `<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6" stroke="currentColor" stroke-width="1.8"/>`;
     });
 
+    /* ============ تطبيع تاريخ الميلاد ============ */
+    function normalizeDate(str) {
+      const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+      let s = (str || '').trim();
+      ar.forEach((n, i) => { s = s.split(n).join(String(i)); });
+      s = s.replace(/\s+/g, '').replace(/[\.\-\/]/g, '/');
+      const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (m) {
+        const d = m[1].padStart(2,'0');
+        const mo = m[2].padStart(2,'0');
+        return `${parseInt(d)}/${parseInt(mo)}/${m[3]}`;
+      }
+      return s;
+    }
+
+    /* ============ إشعار (يظهر ويختفي لوحده) ============ */
+    let notifTimer = null;
+
     function hideNotif() {
+      clearTimeout(notifTimer);
       notif.classList.remove('show');
     }
 
-    function showError() {
+    function showError(title, sub) {
+      clearTimeout(notifTimer);
+      notif.classList.remove('show');
+
+      // نحدّث النص مع قلب 3D جنب العنوان
+      notifTitle.innerHTML = (title || 'كلمة المرور غلط') + ' ' + HEART_3D;
+      notifSub.textContent = sub   || 'جرّبي تاني يا قمر';
+
+      // اهتزاز الحقل
       userWrap.classList.remove('err');
       passWrap.classList.remove('err');
       void passWrap.offsetWidth;
       passWrap.classList.add('err');
-      notif.classList.add('show');
-      errorSound();
+
+      // نعيد تشغيل الأنيميشن من الأول في كل مرة
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          notif.classList.add('show');
+          errorSound();
+
+          // يختفي لوحده بعد 2.8 ثانية
+          notifTimer = setTimeout(() => {
+            notif.classList.remove('show');
+          }, 2800);
+        }, 30);
+      });
+
       setTimeout(() => passWrap.classList.remove('err'), 500);
     }
 
-    form.addEventListener('submit', function(e) {
+    /* ============ إرسال الفورم ============ */
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       hideNotif();
 
       const u = document.getElementById('username').value.trim().toLowerCase();
-      const p = document.getElementById('password').value.trim();
+      const rawP = document.getElementById('password').value;
+      const p = normalizeDate(rawP);
 
-      const userOk = u === CORRECT_USER;
-      const passOk = CORRECT_PASS_VARIANTS.includes(p);
-
-      if (!userOk || !passOk) {
-        showError();
+      if (!u || !rawP.trim()) {
+        showError('لسه في حاجة فاضية 💭', 'املأي الاسم وكلمة المرور');
         return;
       }
 
       loginBtn.disabled = true;
-      btnText.textContent = 'جاري الدخول...';
+      const oldText = btnText.textContent;
+      btnText.textContent = 'جاري التحقق...';
       spinner.style.display = 'inline-block';
 
-      setTimeout(() => {
-        successMelody();
-      }, 300);
+      try {
+        const { data, error } = await sb
+          .from('users')
+          .select('id, username')
+          .eq('username', u)
+          .eq('password', p)
+          .maybeSingle();
 
-      setTimeout(() => {
-        window.location.href = 'page.html';
-      }, 2500);
-    });
+        if (error) {
+          console.error('Supabase error:', error);
+          btnText.textContent = oldText;
+          spinner.style.display = 'none';
+          loginBtn.disabled = false;
+          showError('مشكلة في الاتصال 🛰️', 'حاولي تاني بعد لحظة');
+          return;
+        }
 
-    document.addEventListener('click', function(e) {
-      if (notif.classList.contains('show')) {
-        hideNotif();
+        if (!data) {
+          btnText.textContent = oldText;
+          spinner.style.display = 'none';
+          loginBtn.disabled = false;
+          showError('كلمة المرور غلط', 'جرّبي تاني يا قمر');
+          return;
+        }
+
+        // نجاح
+        // نجاح - حفظ بيانات المستخدم
+btnText.textContent = 'أهلاً بيكي';
+localStorage.setItem('salma-user', JSON.stringify({
+  id: data.id,
+  username: data.username,
+  loginAt: Date.now()
+}));
+setTimeout(successMelody, 250);
+setTimeout(() => {
+  window.location.href = 'page.html';
+}, 1600);
+
+      } catch (err) {
+        console.error(err);
+        btnText.textContent = oldText;
+        spinner.style.display = 'none';
+        loginBtn.disabled = false;
+        showError('حصل خطأ غير متوقع 😢', 'حاولي تاني');
       }
     });
   </script>
