@@ -1319,11 +1319,7 @@ async function loadPost() {
     // --- جلب عدد المشاركات ---
     try {
       const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
-      if (sharesData !== null && sharesData !== undefined) {
-          document.getElementById('postShares').textContent = sharesData;
-      } else {
-          document.getElementById('postShares').textContent = data.shares || 0;
-      }
+      
     } catch(e) {
       document.getElementById('postShares').textContent = data.shares || 0;
     }
