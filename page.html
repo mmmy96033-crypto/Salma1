@@ -1323,7 +1323,11 @@ async function loadPost() {
     } catch(e) {
       document.getElementById('postShares').textContent = data.shares || 0;
     }
-
+if (sharesData !== null && sharesData !== undefined) {
+          document.getElementById('postShares').textContent = sharesData;
+      } else {
+          document.getElementById('postShares').textContent = data.shares || 0;
+  }
   } catch (err) {
     console.error('خطأ في تحميل البوست:', err);
     document.getElementById('postContent').textContent = 'خطأ: ' + (err.message || JSON.stringify(err));
