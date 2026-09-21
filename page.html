@@ -1205,47 +1205,79 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
   /* ================================================================
      كارت البوست
      ================================================================ */
-  let currentPost = null;
-  async function loadPost() {
+     
+     
+     let currentPost = null;
+async function loadPost() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get('post');
+    let query = sb.from('posts').select('*');
+    if (postId) query = query.eq('id', postId);
+    else query = query.order('published_at', { ascending: false }).limit(1);
+    
+    const { data, error } = await query.maybeSingle();
+    
+    if (error) throw error;
+    if (!data) { 
+      document.getElementById('postContent').textContent = 'مفيش بوستات لحد الآن'; 
+      return; 
+    }
+    
+    currentPost = data;
+    renderPost(data);
+    updateShareLink();
+
+    // --- تسجيل المشاهدة وجلب العدد (بطريقة آمنة) ---
     try {
-      const params = new URLSearchParams(window.location.search);
-      const postId = params.get('post');
-      let query = sb.from('posts').select('*');
-      if (postId) query = query.eq('id', postId);
-      else query = query.order('published_at', { ascending: false }).limit(1);
-      const { data, error } = await query.maybeSingle();
-      if (error) throw error;
-      if (!data) { document.getElementById('postContent').textContent = 'مفيش بوستات لحد الآن'; return; }
-      currentPost = data;
-      renderPost(data);
-      updateShareLink();
+      const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
+      
+      // محاولة تسجيل المشاهدة (لو الدالة موجودة)
+      await sb.rpc('register_post_view', { p_id: data.id, u_id: uid }).catch(() => {});
+      
+      // محاولة زيادة العداد (لو الدالة موجودة)
+      await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' }).catch(() => {});
+      
+      // جلب العدد الحقيقي
+      const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
+      if (countData !== null && countData !== undefined) {
+          document.getElementById('postViews').textContent = countData;
+      } else {
+          document.getElementById('postViews').textContent = data.views || 0;
+      }
+    } catch(e) { 
+      document.getElementById('postViews').textContent = data.views || 0;
+    }
 
-      // ✅ تسجيل المشاهدة مرة واحدة فقط لكل مستخدم
-      try {
-        const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
-        const { data: inserted, error: rpcErr } = await sb.rpc('register_post_view', { p_id: data.id, u_id: uid });
-        if (!rpcErr && inserted) {
-          await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' });
-        }
-        // جيب العدد الحقيقي من الجدول
-        const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
-        document.getElementById('postViews').textContent = countData || 0;
-      } catch(e) { console.error('View error:', e); }
+    // --- جلب عدد النسخ (بطريقة آمنة) ---
+    try {
+      const { data: copiesData } = await sb.rpc('get_post_copies_count', { p_id: data.id });
+      if (copiesData !== null && copiesData !== undefined) {
+          document.getElementById('postCopies').textContent = copiesData;
+      } else {
+          document.getElementById('postCopies').textContent = data.copies || 0;
+      }
+    } catch(e) { 
+      document.getElementById('postCopies').textContent = data.copies || 0; 
+    }
 
-      // ✅ جيب عدد النسخ الحقيقي
-      try {
-        const { data: copiesData } = await sb.rpc('get_post_copies_count', { p_id: data.id });
-        document.getElementById('postCopies').textContent = copiesData || 0;
-      } catch(e) { console.error(e); }
+    // --- جلب عدد المشاركات (بطريقة آمنة) ---
+    try {
+      const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
+      if (sharesData !== null && sharesData !== undefined) {
+          document.getElementById('postShares').textContent = sharesData;
+      } else {
+          document.getElementById('postShares').textContent = data.shares || 0;
+      }
+    } catch(e) { 
+      document.getElementById('postShares').textContent = data.shares || 0; 
+    }
 
-      // ✅ جيب عدد المشاركات الحقيقي
-      try {
-        const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
-        document.getElementById('postShares').textContent = sharesData || 0;
-      } catch(e) { console.error(e); }
-
-    } catch (err) { document.getElementById('postContent').textContent = 'حصل خطأ في التحميل'; }
+  } catch (err) { 
+    console.error('خطأ في تحميل البوست:', err);
+    document.getElementById('postContent').textContent = 'حصل خطأ في التحميل'; 
   }
+}
   function getPostLink() {
     if (!currentPost) return window.location.href;
     const base = window.location.origin + window.location.pathname;
