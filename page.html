@@ -896,7 +896,7 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  /* ================================================================
+/* ================================================================
      إعداد Supabase
      ================================================================ */
   const SUPABASE_URL = 'https://utkluvmpelinvlbjzpzx.supabase.co';
@@ -1205,133 +1205,60 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
   /* ================================================================
      كارت البوست
      ================================================================ */
-     
-     
-     let currentPost = null;
-async function loadPost() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get('post');
-    let query = sb.from('posts').select('*');
-    if (postId) query = query.eq('id', postId);
-    else query = query.order('published_at', { ascending: false }).limit(1);
-    
-    const { data, error } = await query.maybeSingle();
-    
-    if (error) throw error;
-    if (!data) { 
-      document.getElementById('postContent').textContent = 'مفيش بوستات لحد الآن'; 
-      return; 
-    }
-    
-    currentPost = data;
-    renderPost(data);
-    updateShareLink();
-
-    // --- تسجيل المشاهدة وجلب العدد (بطريقة آمنة) ---
+  let currentPost = null;
+  async function loadPost() {
     try {
-      const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
-      
-      // محاولة تسجيل المشاهدة (لو الدالة موجودة)
-      await sb.rpc('register_post_view', { p_id: data.id, u_id: uid }).catch(() => {});
-      
-      // محاولة زيادة العداد (لو الدالة موجودة)
-      await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' }).catch(() => {});
-      
-      // جلب العدد الحقيقي
-      const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
-      if (countData !== null && countData !== undefined) {
-          document.getElementById('postViews').textContent = countData;
-      } else {
-          document.getElementById('postViews').textContent = data.views || 0;
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('post');
+      let query = sb.from('posts').select('*');
+      if (postId) query = query.eq('id', postId);
+      else query = query.order('published_at', { ascending: false }).limit(1);
+
+      const { data, error } = await query.maybeSingle();
+
+      if (error) throw error;
+      if (!data) {
+        document.getElementById('postContent').textContent = 'مفيش بوستات لحد الآن';
+        return;
       }
-    } catch(e) { 
-      document.getElementById('postViews').textContent = data.views || 0;
-    }
 
-    // --- جلب عدد النسخ (بطريقة آمنة) ---
-    try {
-      const { data: copiesData } = await sb.rpc('get_post_copies_count', { p_id: data.id });
-      if (copiesData !== null && copiesData !== undefined) {
-          document.getElementById('postCopies').textContent = copiesData;
-      } else {
-          document.getElementById('postCopies').textContent = data.copies || 0;
+      currentPost = data;
+      renderPost(data);
+      updateShareLink();
+
+      // --- تسجيل المشاهدة وجلب العدد ---
+      try {
+        const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
+
+        await sb.rpc('register_post_view', { p_id: data.id, u_id: uid });
+        await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' });
+
+        const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
+        document.getElementById('postViews').textContent = countData ?? data.views ?? 0;
+      } catch(e) {
+        document.getElementById('postViews').textContent = data.views || 0;
       }
-    } catch(e) { 
-      document.getElementById('postCopies').textContent = data.copies || 0; 
-    }
 
-    // --- جلب عدد المشاركات (بطريقة آمنة) ---
-    try {
-      const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
-      if (sharesData !== null && sharesData !== undefined) {
-          document.getElementById('postShares').textContent = sharesData;
-      } else {
-          document.getElementById('postShares').textContent = data.shares || 0;
-        }
-
-      let currentPost = null;
-async function loadPost() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get('post');
-    let query = sb.from('posts').select('*');
-    if (postId) query = query.eq('id', postId);
-    else query = query.order('published_at', { ascending: false }).limit(1);
-
-    const { data, error } = await query.maybeSingle();
-
-    if (error) throw error;
-    if (!data) {
-      document.getElementById('postContent').textContent = 'مفيش بوستات لحد الآن';
-      return;
-    }
-
-    currentPost = data;
-    renderPost(data);
-    updateShareLink();
-
-    // --- تسجيل المشاهدة وجلب العدد ---
-    try {
-      const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
-
-      await sb.rpc('register_post_view', { p_id: data.id, u_id: uid });
-      await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' });
-
-      const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
-      document.getElementById('postViews').textContent = countData ?? data.views ?? 0;
-    } catch(e) {
-      document.getElementById('postViews').textContent = data.views || 0;
-    }
-
-    // --- جلب عدد النسخ ---
-    try {
-      const { data: copiesData } = await sb.rpc('get_post_copies_count', { p_id: data.id });
-      if (copiesData !== null && copiesData !== undefined) {
-          document.getElementById('postCopies').textContent = copiesData;
-      } else {
-          document.getElementById('postCopies').textContent = data.copies || 0;
+      // --- جلب عدد النسخ ---
+      try {
+        const { data: copiesData } = await sb.rpc('get_post_copies_count', { p_id: data.id });
+        document.getElementById('postCopies').textContent = copiesData ?? data.copies ?? 0;
+      } catch(e) {
+        document.getElementById('postCopies').textContent = data.copies || 0;
       }
-    } catch(e) {
-      document.getElementById('postCopies').textContent = data.copies || 0;
-    }
 
-    // --- جلب عدد المشاركات ---
-    try {
-      const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
-      
-    } catch(e) {
-      document.getElementById('postShares').textContent = data.shares || 0;
+      // --- جلب عدد المشاركات ---
+      try {
+        const { data: sharesData } = await sb.rpc('get_post_shares_count', { p_id: data.id });
+        document.getElementById('postShares').textContent = sharesData ?? data.shares ?? 0;
+      } catch(e) {
+        document.getElementById('postShares').textContent = data.shares || 0;
+      }
+
+    } catch (err) {
+      console.error('خطأ في تحميل البوست:', err);
+      document.getElementById('postContent').textContent = 'خطأ: ' + (err.message || JSON.stringify(err));
     }
-if (sharesData !== null && sharesData !== undefined) {
-          document.getElementById('postShares').textContent = sharesData;
-      } else {
-          document.getElementById('postShares').textContent = data.shares || 0;
-  }
-  } catch (err) {
-    console.error('خطأ في تحميل البوست:', err);
-    document.getElementById('postContent').textContent = 'خطأ: ' + (err.message || JSON.stringify(err));
-  }
   }
   function getPostLink() {
     if (!currentPost) return window.location.href;
@@ -1480,9 +1407,6 @@ if (sharesData !== null && sharesData !== undefined) {
   });
 
   /* ================================================================
-     قسم الكتب
-     ================================================================ */
-    /* ================================================================
      قسم الكتب
      ================================================================ */
   let allBooks = [];
@@ -2093,6 +2017,6 @@ if (sharesData !== null && sharesData !== undefined) {
   loadBooks();
 
   console.log('✅ الصفحة جاهزة');
-</script>
+    </script>
 </body>
 </html>
