@@ -904,6 +904,46 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   /* ================================================================
+     ✅ دوال مساعدة للتحقق من صحة الـ UUID
+     ================================================================ */
+  const isValidUUID = (s) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(s || ''));
+
+  /**
+   * ترجع UUID صالح أو null.
+   * لو القيمة المدخلة مش UUID، بترجع null بدل ما تسبب خطأ في Supabase.
+   */
+  function safeUUID(value) {
+    const v = String(value == null ? '' : value).trim();
+    return isValidUUID(v) ? v : null;
+  }
+
+  /**
+   * توليد UUID عشوائي (v4) للزوار.
+   */
+  function generateUUID() {
+    if (window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : ((r & 0x3) | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  /**
+   * ترجع UUID صالح للمستخدم الحالي، أو UUID للزائر مخزّن في localStorage.
+   */
+  function getValidUserId() {
+    const real = safeUUID(currentUserId);
+    if (real) return real;
+    let guest = localStorage.getItem('salma-guest-id');
+    if (!isValidUUID(guest)) {
+      guest = generateUUID();
+      localStorage.setItem('salma-guest-id', guest);
+    }
+    return guest;
+  }
+
+  /* ================================================================
      حماية الصفحة
      ================================================================ */
   const storedUser = localStorage.getItem('salma-user');
@@ -917,18 +957,26 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
       try {
         const user = JSON.parse(storedUser);
         currentUserId = user.id;
-        const { data, error } = await sb.from('users').select('id, username').eq('id', user.id).maybeSingle();
-        if (error || !data) {
-          localStorage.removeItem('salma-user');
-          window.location.href = 'index.html';
-          return;
+
+        // ✅ نتأكد إن الـ id uuid صالح، لو مش صالح نعتبره غير مسجل
+        if (!safeUUID(currentUserId)) {
+          console.warn('⚠️ user.id ليس UUID صالح:', currentUserId);
+          // بدل ما نطرد المستخدم، نخليه زائر
+          currentUserId = null;
+        } else {
+          const { data, error } = await sb.from('users').select('id, username').eq('id', currentUserId).maybeSingle();
+          if (error || !data) {
+            localStorage.removeItem('salma-user');
+            window.location.href = 'index.html';
+            return;
+          }
+          const displayName = data.username === 'salma' ? 'سلمى السيد' : data.username;
+          currentUserName = displayName;
+          const headerName = document.getElementById('headerUserName');
+          const sideName = document.getElementById('sidebarUserName');
+          if (headerName) headerName.textContent = displayName;
+          if (sideName) sideName.textContent = displayName;
         }
-        const displayName = data.username === 'salma' ? 'سلمى السيد' : data.username;
-        currentUserName = displayName;
-        const headerName = document.getElementById('headerUserName');
-        const sideName = document.getElementById('sidebarUserName');
-        if (headerName) headerName.textContent = displayName;
-        if (sideName) sideName.textContent = displayName;
       } catch (err) { console.error('Supabase error:', err); }
     })();
   }
@@ -1211,9 +1259,13 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
       const params = new URLSearchParams(window.location.search);
       const postId = params.get('post');
       let query = sb.from('posts').select('*');
-      const isValidUUID = (s) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
-if (postId && isValidUUID(postId)) query = query.eq('id', postId);
-      else query = query.order('published_at', { ascending: false }).limit(1);
+
+      // ✅ نتحقق إن postId فعلاً UUID صالح قبل ما نستخدمه
+      if (postId && isValidUUID(postId)) {
+        query = query.eq('id', postId);
+      } else {
+        query = query.order('published_at', { ascending: false }).limit(1);
+      }
 
       const { data, error } = await query.maybeSingle();
 
@@ -1227,16 +1279,22 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
       renderPost(data);
       updateShareLink();
 
+      // ✅ نتأكد إن data.id فعلاً UUID صالح قبل أي RPC
+      if (!isValidUUID(data.id)) {
+        console.warn('⚠️ post.id ليس UUID صالح:', data.id);
+        return;
+      }
+
       // --- تسجيل المشاهدة وجلب العدد ---
       try {
-        const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || (() => { const g = 'g_' + Date.now(); localStorage.setItem('salma-guest-id', g); return g; })()));
-
+        const uid = getValidUserId();
         await sb.rpc('register_post_view', { p_id: data.id, u_id: uid });
         await sb.rpc('increment_post_stat', { p_id: data.id, stat_name: 'views' });
 
         const { data: countData } = await sb.rpc('get_post_views_count', { p_id: data.id });
         document.getElementById('postViews').textContent = countData ?? data.views ?? 0;
       } catch(e) {
+        console.warn('views error:', e);
         document.getElementById('postViews').textContent = data.views || 0;
       }
 
@@ -1292,14 +1350,15 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
     }
     // ✅ سجل النسخة مرة واحدة فقط لكل مستخدم
     try {
-      const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || 'anon'));
+      if (!isValidUUID(currentPost.id)) return;
+      const uid = getValidUserId();
       const { data: inserted } = await sb.rpc('register_post_copy', { p_id: currentPost.id, u_id: uid });
       if (inserted) {
         await sb.rpc('increment_post_stat', { p_id: currentPost.id, stat_name: 'copies' });
       }
       const { data: countData } = await sb.rpc('get_post_copies_count', { p_id: currentPost.id });
       document.getElementById('postCopies').textContent = countData || 0;
-    } catch(e) { console.error('Copy error:', e); }
+    } catch(e) { console.warn('Copy error:', e); }
     showCopyToast('تم نسخ البوست');
   });
   let toastTimer = null;
@@ -1329,7 +1388,7 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
     }
     showCopyToast('تم نسخ الرابط');
     // حدّث العداد من الداتا بيز
-    if (currentPost) {
+    if (currentPost && isValidUUID(currentPost.id)) {
       try {
         const { data: countData } = await sb.rpc('get_post_shares_count', { p_id: currentPost.id });
         document.getElementById('postShares').textContent = countData || 0;
@@ -1345,16 +1404,16 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
       const text = currentPost ? (currentPost.content || '').substring(0, 100) : '';
 
       // سجل المشاركة في الداتا بيز (مرة واحدة فقط لكل مستخدم)
-      if (currentPost) {
+      if (currentPost && isValidUUID(currentPost.id)) {
         try {
-          const uid = String(currentUserId || 'guest_' + (localStorage.getItem('salma-guest-id') || 'anon'));
+          const uid = getValidUserId();
           const { data: inserted } = await sb.rpc('register_post_share', { p_id: currentPost.id, u_id: uid });
           if (inserted) {
             await sb.rpc('increment_post_stat', { p_id: currentPost.id, stat_name: 'shares' });
           }
           const { data: countData } = await sb.rpc('get_post_shares_count', { p_id: currentPost.id });
           document.getElementById('postShares').textContent = countData || 0;
-        } catch(e) { console.error('Share error:', e); }
+        } catch(e) { console.warn('Share error:', e); }
       }
 
       // افتح التطبيق المناسب
@@ -1430,16 +1489,20 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
   let favIds = new Set();
   async function loadFavorites() {
     if (!currentUserId) return;
+    const uid = safeUUID(currentUserId);
+    if (!uid) return;
     try {
-      const { data, error } = await sb.from('favorites').select('book_id').eq('user_id', String(currentUserId));
+      const { data, error } = await sb.from('favorites').select('book_id').eq('user_id', uid);
       if (!error && data) favIds = new Set(data.map(r => String(r.book_id)));
     } catch (e) {}
   }
   let downloadIds = new Set();
   async function loadDownloads() {
     if (!currentUserId) return;
+    const uid = safeUUID(currentUserId);
+    if (!uid) return;
     try {
-      const { data, error } = await sb.from('downloads').select('book_id').eq('user_id', String(currentUserId));
+      const { data, error } = await sb.from('downloads').select('book_id').eq('user_id', uid);
       if (!error && data) downloadIds = new Set(data.map(r => String(r.book_id)));
     } catch (e) {}
   }
@@ -1455,13 +1518,15 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
   async function toggleFavorite(bookId) {
     const id = String(bookId);
     if (!id || !currentUserId) return;
+    const uid = safeUUID(currentUserId);
+    if (!uid) return;
     const was = favIds.has(id);
     if (was) favIds.delete(id); else favIds.add(id);
     refreshFavUI();
     let error = null;
     try {
-      if (was) { ({ error } = await sb.from('favorites').delete().eq('user_id', String(currentUserId)).eq('book_id', id)); }
-      else { ({ error } = await sb.from('favorites').upsert({ user_id: String(currentUserId), book_id: id }, { onConflict: 'user_id,book_id' })); }
+      if (was) { ({ error } = await sb.from('favorites').delete().eq('user_id', uid).eq('book_id', id)); }
+      else { ({ error } = await sb.from('favorites').upsert({ user_id: uid, book_id: id }, { onConflict: 'user_id,book_id' })); }
     } catch (e) { error = e; }
     if (error) {
       if (was) favIds.add(id); else favIds.delete(id);
@@ -1886,8 +1951,10 @@ if (postId && isValidUUID(postId)) query = query.eq('id', postId);
   }
   async function recordDownload(book) {
     if (!currentUserId) return;
+    const uid = safeUUID(currentUserId);
+    if (!uid) return;
     downloadIds.add(String(book.id));
-    try { await sb.from('downloads').upsert({ user_id: String(currentUserId), book_id: String(book.id), downloaded_at: new Date().toISOString() }, { onConflict: 'user_id,book_id' }); } catch (e) {}
+    try { await sb.from('downloads').upsert({ user_id: uid, book_id: String(book.id), downloaded_at: new Date().toISOString() }, { onConflict: 'user_id,book_id' }); } catch (e) {}
     if (document.getElementById('page-downloads').classList.contains('active')) renderDownloadsPage();
   }
 
