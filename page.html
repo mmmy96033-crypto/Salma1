@@ -1211,7 +1211,8 @@ body.dark-mode .logout-cancel-btn { background: rgba(80,60,75,.5); }
       const params = new URLSearchParams(window.location.search);
       const postId = params.get('post');
       let query = sb.from('posts').select('*');
-      if (postId) query = query.eq('id', postId);
+      const isValidUUID = (s) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+if (postId && isValidUUID(postId)) query = query.eq('id', postId);
       else query = query.order('published_at', { ascending: false }).limit(1);
 
       const { data, error } = await query.maybeSingle();
